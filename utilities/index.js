@@ -61,4 +61,39 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+Util.buildInventoryDetail = async function(data_detail){
+  let detail
+  console.log(data_detail)
+  if(data_detail.length > 0){
+    detail = '<section class="detail_section">';
+    detail += '<h1>' + data_detail[0].inv_year + " " +  data_detail[0].inv_make + " " + data_detail[0].inv_model + '</h1>'
+    detail += '<img src="' + data_detail[0].inv_thumbnail 
+    +'" alt="Image of '+ data_detail[0].inv_make + ' ' + data_detail[0].inv_model 
+    +' on CSE Motors" />'
+    detail += '<article>'
+    detail += '<h4>' + data_detail[0].inv_year + " " +  data_detail[0].inv_make + " " + data_detail[0].inv_model + '</h4>'
+    detail += '<p class="inv_price">Price: ' + "$" + new Intl.NumberFormat('en-US').format(data_detail[0].inv_price) + '</p>'
+    detail += '<p class="inv_description">Description: ' + data_detail[0].inv_description + '</p>'
+    detail += '<p class="inv_color">Color: ' + data_detail[0].inv_color + '</p>'
+    detail += '<p class="inv_miles">Miles: ' + new Intl.NumberFormat('en-US').format(data_detail[0].inv_miles) + '</p>' 
+    detail += '</article>'
+    detail += '</section>'
+  } else { 
+    detail += '<p class="notice">Sorry, no matching vehicles details could be found.</p>'
+  }
+  return detail 
+}
+
+Util.buildItemError = async function(data_error, req, res, next){
+  let error_message
+  error_message += '<p> my error is ' + data_error[0].inv_color + '</p>'
+  return error_message
+}
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
 module.exports = Util

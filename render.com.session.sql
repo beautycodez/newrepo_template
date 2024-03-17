@@ -1,1 +1,4 @@
-SELECT * FROM public.classification ORDER BY classification_name
+SELECT * FROM
+    public.inventory
+WHERE
+    inv_id = 2;
