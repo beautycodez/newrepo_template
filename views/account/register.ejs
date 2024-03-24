@@ -1,0 +1,38 @@
+<!-- ************************** -->
+<!-- The content Heading -->
+<!-- ************************** -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<% messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+  
+<form action="/account/register" method="post">
+    <fieldset>
+        <legend>Sign up</legend>
+        <label for="account_firstname" class="top">First Name*: <input type="text" id="account_firstname" name="account_firstname" required></label>
+        <label for="account_lastname" class="top">Last Name*: <input type="text" id="account_lastname" name="account_lastname" required></label>
+        <label for="account_email" class="top">Email*: <input type="email" id="account_email" name="account_email" required></label>
+        <label for="account_password" class="top">Password*: <input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
+        <p>The password should contain: <br>
+            * 12 characters in length, minimum <br>
+            * contain at least 1 capital letter <br>
+            * contain at least 1 number <br>
+            * contain at least 1 special character</p>
+        <button>Register</button>
+        
+    </fieldset>
+</form>
+<!-- ************************** -->
+<!-- form of the application -->
+<!-- ************************** -->
