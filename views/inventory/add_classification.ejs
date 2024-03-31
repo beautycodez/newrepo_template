@@ -1,0 +1,29 @@
+<!-- ************************** -->
+<!-- The content Heading -->
+<!-- ************************** -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error=> { %>
+        <li>
+            <%= error.msg %>
+        </li>
+        <% }) %>
+</ul>
+<% } %>
+<%- messages() %>
+<!-- ************************** -->
+<!-- Add classification form-->
+<!-- ************************** -->
+<form class="register-car" action="add_classification" method="post">
+  <fieldset class="fieldset">
+    <legend>Add the classification of the Vehicle</legend>
+    <p>Name must be alphanumeric characters only</p>
+    <label class="top">Classification Name: <input class="bottom" type="text" name="classification_name" id="classificationName" required value="<%= locals.classification_name %>" pattern="[a-zA-Z0-9]+"></label>
+
+  </fieldset>
+  <button class="submit-btn">Submit</button>
+</form>

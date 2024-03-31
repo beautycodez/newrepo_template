@@ -90,6 +90,28 @@ Util.buildItemError = async function(data_error, req, res, next){
   return error_message
 }
 /* ****************************************
+ * Classification List for the Select and 
+ * Options - Add vehicle view
+ **************************************** */
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select class="bottom" name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList
+}
+/* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling

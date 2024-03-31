@@ -1,0 +1,17 @@
+<!-- ************************** -->
+<!-- The content Heading -->
+<!-- ************************** -->
+<% if (title) { %>
+    <h1>Vehicle <%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<%- messages() %>
+
+<!-- ************************** -->
+<!-- The management view to be displayed-->
+<!-- ************************** -->
+
+<a class="manag-link" href="add_classification">Add New Classification</a>
+<a class="manag-link" href="add_vehicle">Add New Vehicle</a>
