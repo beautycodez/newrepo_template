@@ -4,6 +4,7 @@ const router = new express.Router();
 const invController = require("../controllers/invController");
 const utilities = require("../utilities/index");
 const regValidate = require("../utilities/inventory-validation");
+const invCont = require("../controllers/invController");
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
@@ -47,5 +48,17 @@ router.post(
   regValidate.checkInventoryData,
   utilities.handleErrors(invController.registerVehicle)
 );
+
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// router to build the edit view to update any vehicle
+router.get('/edit/:inv_id', utilities.handleErrors(invCont.buildEditView))
+
+// router to send the updated information to the data base
+router.post("/update/",
+regValidate.inventoryRules(),
+regValidate.checkUpdateData,
+ utilities.handleErrors(invController.updateInventory))
+
 
 module.exports = router;

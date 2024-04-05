@@ -20,7 +20,7 @@
 <!-- form of the application -->
 <!-- ************************** -->
 
-<form action="/account/login" method="post">
+<form id="loginForm" action="/account/login" method="post">
     <fieldset>
         <legend>Log in</legend>
         <label for="account_email" class="top">Email*: <input type="email" id="accountEmail" name="account_email" required value="<%= locals.account_email %>"></label>

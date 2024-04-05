@@ -1,0 +1,44 @@
+<!-- ************************** -->
+<!-- The content Heading -->
+<!-- ************************** -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %> <%- locals.messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error=> { %>
+        <li>
+            <%= error.msg %>
+        </li>
+        <% }) %>
+</ul>
+<% } %>
+<!-- ************************** -->
+<!-- build the add new vehicle form-->
+<!-- ************************** -->
+<form id="updateForm" class="register-car" action="/inv/update/" method="post">
+  <fieldset class="fieldset">
+    <legend>All Fields are required</legend>
+    <label class="top">Classification</label>
+    <%- locals.classificationList %>
+    <!-- <select name="classification_id" id="ClassificationId">
+      <option value="Default">Select the Classification</option> -->
+    </select>
+    <label class="top">Make: <input class="bottom" type="text" name="inv_make" id="inventoryMake" pattern=".{3,}" value="<%- locals.inv_make %>" placeholder="Min of 3 Characters" required></label>
+    <label class="top">Model: <input class="bottom" type="text" name="inv_model" id="inventoryModel" pattern=".{3,}" value="<%- locals.inv_model %>" placeholder="Min of 3 Characters" required></label>
+    <label class="top">Description: <textarea class="bottom" name="inv_description" id="inventoryDescription" cols="30" rows="10" required><%- locals.inv_description %></textarea></label>
+    <label class="top">Image Path: <input class="bottom" type="text" name="inv_image" id="inventoryImage" value="<%- locals.inv_image %>" required></label>
+    <label class="top">Thumbnail Path: <input class="bottom" type="text" name="inv_thumbnail" id="inventoryThumbnail" value="<%- locals.inv_thumbnail %>" required></label>
+    <label class="top">Price: <input class="bottom" type="number" name="inv_price" id="inventoryPrice" value="<%- locals.inv_price %>" placeholder="Decimal or Integer" step="any" required></label>
+    <label class="top">Year: <input class="bottom" type="number" name="inv_year" id="inventoryYear" pattern="\d{4}" value="<%- locals.inv_year %>" placeholder="4-digit year" required></label>
+    <label class="top">Miles: <input class="bottom" type="number" name="inv_miles" id="inventoryMiles" pattern="[0-9]+" value="<%- locals.inv_miles %>" placeholder="Digits only" required></label>
+    <label class="top">Color: <input class="bottom" type="text" name="inv_color" id="inventoryColor" value="<%- locals.inv_color %>" required></label>
+  </fieldset>
+  <button type="submit" class="submit-btn" disabled>Update Vehicle</button>
+  <input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
+</form>
+
+<script src="../../js/inv-update.js"></script>

@@ -8,7 +8,7 @@ const validate = {};
 validate.inventoryRules = () => {
   return [
     // make is required and must be string
-    body("inventory_make")
+    body("inv_make")
       .trim()
       .escape()
       .notEmpty()
@@ -16,7 +16,7 @@ validate.inventoryRules = () => {
       .withMessage("Please provide the vehicle make with at least 3 characters"), // on error this message is sent.
 
     // model is required and must be string
-    body("inventory_model")
+    body("inv_model")
       .trim()
       .escape()
       .notEmpty()
@@ -24,7 +24,7 @@ validate.inventoryRules = () => {
       .withMessage("Please provide the vehicle model with at least 3 characters."), // on error this message is sent.
 
     // valid year is required and cannot already exist in the DB
-    body("inventory_year")
+    body("inv_year")
       .trim()
       .escape()
       .notEmpty()
@@ -32,7 +32,7 @@ validate.inventoryRules = () => {
       .withMessage("The inventory year must be exactly 4 digits."),
 
     // image is required and must be strong password
-    body("inventory_image")
+    body("inv_image")
       .trim()
       .escape()
       .notEmpty()
@@ -41,7 +41,7 @@ validate.inventoryRules = () => {
       .withMessage("A valid inv_image is required."),
 
     // thumbnail is required and must be strong password
-    body("inventory_thumbnail")
+    body("inv_thumbnail")
       .trim()
       .escape()
       .notEmpty()
@@ -50,14 +50,14 @@ validate.inventoryRules = () => {
       .withMessage("A valid inv_thumbnail is required."),
 
     // price is required and must be strong password
-    body("inventory_price")
+    body("inv_price")
       .trim()
       .escape()
       .notEmpty()
       .withMessage("A valid inv_price is required."),
 
     // miles is required and must be strong password
-    body("inventory_miles")
+    body("inv_miles")
       .trim()
       .escape()
       .notEmpty()
@@ -66,7 +66,7 @@ validate.inventoryRules = () => {
       .withMessage("The miles should be an integer number and have at least 4 ."),
 
     // color is required and must be strong password
-    body("inventory_color")
+    body("inv_color")
       .trim()
       .escape()
       .notEmpty()
@@ -80,7 +80,7 @@ validate.inventoryRules = () => {
       .withMessage("A valid classification_id is required."),
 
     // desctiption is required and must be strong password
-    body("inventory_description")
+    body("inv_description")
       .trim()
       .escape()
       .notEmpty()
@@ -105,15 +105,15 @@ validate.newClassificationRules = () => {
  * ***************************** */
 validate.checkInventoryData = async (req, res, next) => {
   const {
-    inventory_make,
-    inventory_model,
-    inventory_year,
-    inventory_description,
-    inventory_image,
-    inventory_thumbnail,
-    inventory_price,
-    inventory_miles,
-    inventory_color,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
     classification_id,
   } = req.body;
 
@@ -126,17 +126,62 @@ validate.checkInventoryData = async (req, res, next) => {
       errors,
       title: "Add Inventory",
       nav,
-      inventory_make,
-      inventory_model,
-      inventory_year,
-      inventory_description,
-      inventory_image,
-      inventory_thumbnail,
-      inventory_price,
-      inventory_miles,
-      inventory_color,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
       classification_id,
       classificationList
+    });
+    return;
+  }
+  next();
+};
+
+/* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const {
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    inv_id,
+    classification_id,
+  } = req.body;
+
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    const classificationList = await utilities.buildClassificationList()
+    res.render("inventory/edit_inventory", {
+      errors,
+      title: "Update" + " "+ inv_make + " " + inv_model,
+      nav,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+      classificationList,
+      inv_id
     });
     return;
   }
