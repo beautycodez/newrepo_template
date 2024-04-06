@@ -60,5 +60,10 @@ regValidate.inventoryRules(),
 regValidate.checkUpdateData,
  utilities.handleErrors(invController.updateInventory))
 
+// router to build the delete view
+router.get("/delete/:inv_id", utilities.handleErrors(invCont.buildDeleteView))
+
+//router to delete the inventory item from the database
+router.post("/delete/", utilities.handleErrors(invCont.deleteItem))
 
 module.exports = router;

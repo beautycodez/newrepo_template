@@ -76,6 +76,7 @@ invCont.buildAddVehicle = async function (req, res, next) {
 invCont.registerClassification = async function (req, res, next) {
   let nav = await utilities.getNav()
   const add_classification_name = "Add a New Classification"
+  const classificationList = await utilities.buildClassificationList()
   const classification_name = req.body.classification_name;
   const regResult = await invModel.registerClassification(
     classification_name
@@ -90,6 +91,7 @@ invCont.registerClassification = async function (req, res, next) {
       title: add_classification_name,
       nav,
       errors: null,
+      classificationList
     });
   } else {
     req.flash("notice", "Sorry, the registration failed.");
@@ -136,7 +138,8 @@ invCont.registerVehicle = async function (req, res, next) {
     res.status(201).render("./inventory/management", {
       title: add_classification_name,
       nav,
-      errors: null
+      errors: null,
+      classificationList
     });
   } else {
     req.flash("notice", "Sorry, the registration failed.");
@@ -246,6 +249,55 @@ invCont.updateInventory = async function (req, res, next) {
     inv_miles,
     inv_color,
     classification_id
+    })
+  }
+}
+// The Delete View can be displayed from here
+invCont.buildDeleteView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const inv_id = parseInt(req.params.inv_id)
+  const inv_data =  await invModel.getInventoryDetailById(inv_id)
+  let inv_make = inv_data[0].inv_make
+  let inv_model = inv_data[0].inv_model
+  res.render("./inventory/delete_confirmation", {
+    title: "Delete" + " " + inv_make + " " + inv_model,
+    nav,
+    errors: null,
+    inv_id,
+    inv_make: inv_data[0].inv_make,
+    inv_model: inv_data[0].inv_model,
+    inv_year: inv_data[0].inv_year,
+    inv_price: inv_data[0].inv_price,
+  })
+}
+
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteItem = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const inv_id = parseInt(req.body.inv_id)
+  const {inv_make, inv_model} = req.body
+  const deleteItem = await invModel.deleteInventoryItem(inv_id)
+
+  if (deleteItem) {
+    const itemName = inv_make + " " + inv_model
+    req.flash("notice", `The ${itemName} was successfully deleted.`)
+    res.redirect("/inv/management")
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).redirect(`/inv/delete/${inv_id}`, {
+    title: "Edit " + itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_price,
     })
   }
 }

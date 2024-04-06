@@ -1,0 +1,77 @@
+<!-- ************************** -->
+<!-- The content Heading -->
+<!-- ************************** -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %> <%- locals.messages() %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error=> { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+<!-- ************************** -->
+<!-- build the add new vehicle form-->
+<!-- ************************** -->
+<form id="deleteForm" class="register-car" action="/inv/delete/" method="post">
+  <fieldset class="fieldset">
+    <legend>Confirm Deletion - The delete is permanent.</legend>
+
+    <label class="top"
+      >Make:
+      <input
+        class="bottom"
+        type="text"
+        name="inv_make"
+        id="inventoryMake"
+        pattern=".{3,}"
+        value="<%- locals.inv_make %>"
+        placeholder="Min of 3 Characters"
+        required
+        readonly
+    /></label>
+    <label class="top"
+      >Model:
+      <input
+        class="bottom"
+        type="text"
+        name="inv_model"
+        id="inventoryModel"
+        pattern=".{3,}"
+        value="<%- locals.inv_model %>"
+        placeholder="Min of 3 Characters"
+        required
+        readonly
+    /></label>
+    <label class="top"
+      >Price:
+      <input
+        class="bottom"
+        type="number"
+        name="inv_price"
+        id="inventoryPrice"
+        value="<%- locals.inv_price %>"
+        placeholder="Decimal or Integer"
+        step="any"
+        required
+        readonly
+    /></label>
+    <label class="top"
+      >Year:
+      <input
+        class="bottom"
+        type="number"
+        name="inv_year"
+        id="inventoryYear"
+        pattern="\d{4}"
+        value="<%- locals.inv_year %>"
+        placeholder="4-digit year"
+        required
+        readonly
+    /></label>
+  </fieldset>
+  <button type="submit" class="submit-btn">Delete Vehicle</button>
+  <input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
+</form>
