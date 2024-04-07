@@ -18,18 +18,21 @@ router.get("/error500", utilities.handleErrors(invController.buildError500));
 //Router to build the management view
 router.get(
   "/management",
+  utilities.checkAccountType,
   utilities.handleErrors(invController.buildManagement)
 );
 
 // Router to build the add_classification
 router.get(
   "/add_classification",
+  utilities.checkAccountType,
   utilities.handleErrors(invController.buildAddClassification)
 );
 
 // Router to build the add_vehicle
 router.get(
   "/add_vehicle",
+  utilities.checkAccountType,
   utilities.handleErrors(invController.buildAddVehicle)
 );
 

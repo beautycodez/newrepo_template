@@ -18,3 +18,11 @@
   <% } %>
 
   <h1>You are logged in</h1>
+  <h2>Thank for comming <%- account_firstname %> </h2>
+  <a href="/account/update_account">Update account information</a>
+  <% if (account_type !== 'Client') {%>
+    <h3>Inventory Management</h3>
+    <p>You have access to edit or add the inventory: <a href="/inv/management">Click here to go to the inventory Management view</a></p>
+  <%}%>
+
+  

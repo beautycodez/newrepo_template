@@ -1,0 +1,79 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %> <%- messages() %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<form class="register-car" action="/account/update_account" method="post">
+  <fieldset class="fieldset">
+    <legend>Account Update</legend>
+    <label class="top"
+      >First Name:
+      <input
+        class="bottom"
+        type="text"
+        name="account_firstname"
+        id="accountFirstname"
+        pattern=".{3,}"
+        value="<%= locals.account_firstname %>"
+        placeholder="Min of 3 Characters"
+        required
+    /></label>
+    <label class="top"
+      >Last Name:
+      <input
+        class="bottom"
+        type="text"
+        name="account_lastname"
+        id="accountLastname"
+        pattern=".{3,}"
+        value="<%= locals.account_lastname %>"
+        placeholder="Min of 3 Characters"
+        required
+    /></label>
+    <label class="top"
+      >Email Address:
+      <input
+        class="bottom"
+        type="email"
+        name="account_email"
+        id="accountEmail"
+        value="<%= locals.account_email %>"
+        required
+    /></label>
+  </fieldset>
+  <button class="submit-btn">Update Account</button>
+  <input type="hidden" name="account_id" <% if(locals.account_id) { %>
+    value="<%= locals.account_id %>" <% } %>>
+</form>
+
+<form class="register-car" action="/account/update_password" method="post">
+  <fieldset class="fieldset">
+    <legend>Password Update</legend>
+    <label class="top"
+      >Enter the New Password:
+      <input
+        class="bottom"
+        type="password"
+        name="account_password"
+        id="accountPassword"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        placeholder="type here"
+        required
+    /></label>
+    <p>
+      The password should contain: <br />
+      * 12 characters in length, minimum <br />
+      * contain at least 1 capital letter <br />
+      * contain at least 1 number <br />
+      * contain at least 1 special character
+    </p>
+  </fieldset>
+  <button class="submit-btn">Update Password</button>
+  <input type="hidden" name="account_id" <% if(locals.account_id) { %>
+  value="<%= locals.account_id %>" <% } %>>
+</form>

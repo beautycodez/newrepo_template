@@ -145,7 +145,17 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login")
   }
  }
-
+/* ****************************************
+ *  Check account authorization
+ * ************************************ */
+Util.checkAccountType = (req, res, next) => {
+  if (res.locals.loggedin && res.locals.accountData.account_type !== 'Client') {
+    next()
+  } else {
+    req.flash("notice", "Sorry, only Employee or Admin user can access to the inventory management view")
+    return res.redirect("/account/login")
+  }
+ }
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
