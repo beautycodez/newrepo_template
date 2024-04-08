@@ -121,7 +121,7 @@ article ul li{
   width: 300px;
   list-style: none;
 }
-#inv-display li a {
+.detail_link {
   display: block;
   width: 300px;
   height: 200px;
@@ -129,9 +129,9 @@ article ul li{
 #inv-display li div h2{
   height: 50px;
 }
-#inv-display li a img {
+.detail_img {
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   object-fit: cover;
 }
 .namePrice {
@@ -157,6 +157,9 @@ article ul li{
 .detail_section article p:nth-child(even) {
   background-color: azure;
   padding: 10px 0;
+}
+.link_add_cart {
+  height: 10px;
 }
 /* *******************************/
 /* ******management view *********/

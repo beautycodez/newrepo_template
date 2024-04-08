@@ -13,6 +13,7 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoutes")
 const accountRoute = require("./routes/accountRoute")
+const cartRoute = require("./routes/cartRoute")
 const utilities = require("./utilities/index")
 const session = require("express-session")
 const pool = require('./database/')
@@ -70,6 +71,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 // Account routes
 app.use("/account", accountRoute)
+// Cart routes
+app.use("/cart", cartRoute)
 
 /* ****************************
 * File not found route - must be last route in list

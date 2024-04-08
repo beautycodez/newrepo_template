@@ -38,20 +38,21 @@ Util.buildClassificationGrid = async function(data){
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => { 
       grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+      grid +=  '<a class="detail_link" href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + 'details"><img src="' + vehicle.inv_thumbnail 
+      + 'details"><img class="detail_img" src="' + vehicle.inv_thumbnail 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
       +' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
       grid += '<hr />'
       grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+      grid += '<a class="detail_link" href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
       grid += '</h2>'
       grid += '<span>$' 
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>' + '<br>'
+      grid += '<a href="/cart/link_add_cart/' + vehicle.inv_id +'" href="/cart/add_item">Add to your cart</a>'
       grid += '</div>'
       grid += '</li>'
     })
@@ -90,6 +91,8 @@ Util.buildItemError = async function(data_error, req, res, next){
   error_message += '<p> my error is ' + data_error[0].inv_color + '</p>'
   return error_message
 }
+
+
 /* ****************************************
  * Classification List for the Select and 
  * Options - Add vehicle view
@@ -112,6 +115,47 @@ Util.buildClassificationList = async function (classification_id = null) {
   classificationList += "</select>"
   return classificationList
 }
+/* ****************************************
+ * cart link with the account_id
+ **************************************** */
+Util.buildCartLink = async function (account_id, account_firstname){
+  const link = `<a href="/cart/list/${account_id}">Hello ${account_firstname}, Click here to see your cart</a>`
+  return link
+}
+/* ****************************************
+ * cart grid
+ **************************************** */
+Util.cartGrid = async function(data) {
+  let grid
+  if(data.length > 0){
+    grid = '<ul id="inv-display">'
+    data.forEach(vehicle => { 
+      grid += '<li>'
+      grid +=  '<a class="detail_link" href="../../inv/detail/'+ vehicle.inv_id 
+      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
+      + 'details"><img class="detail_img" src="' + vehicle.inv_thumbnail 
+      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+      +' on CSE Motors" /></a>'
+      grid += '<div class="namePrice">'
+      grid += '<hr />'
+      grid += '<h2>'
+      grid += '<a class="detail_link" href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+      grid += '</h2>'
+      grid += '<span>$' 
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>' + '<br>'
+      grid += '<a href="/cart/delete/' + vehicle.cart_id +'" href="/cart/add_item">Delete From Cart</a>'
+      grid += '</div>'
+      grid += '</li>'
+    })
+    grid += '</ul>'
+  } else { 
+    grid += '<p class="notice">Your shopping cart is empty.</p>'
+  }
+  return grid
+}
+
 /* ****************************************
 * Middleware to check token validity
 **************************************** */
